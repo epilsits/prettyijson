@@ -1,0 +1,51 @@
+[
+    {
+        "id": "selection",
+        "caption": "Selection",
+        "children": [
+            {
+                "id": "format",
+                "caption": "Format",
+                "children": [
+                    {
+                        "caption": "Pretty iJson",
+                        "command": "pretty_ijson"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "mnemonic": "n",
+        "caption": "Preferences",
+        "id": "preferences",
+        "children": [
+            {
+                "mnemonic": "P",
+                "caption": "Package Settings",
+                "id": "package-settings",
+                "children": [
+                    {
+                        "caption": "Pretty iJson",
+                        "children": [
+                            {
+                                "caption": "Settings – Default",
+                                "args": {
+                                    "file": "${packages}/PrettyiJson/PrettyiJson.sublime-settings"
+                                },
+                                "command": "open_file"
+                            },
+                            {
+                                "caption": "Settings – User",
+                                "args": {
+                                    "file": "${packages}/User/PrettyiJson.sublime-settings"
+                                },
+                                "command": "open_file"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+]

@@ -1,0 +1,6 @@
+{
+    // Indentation - "\t" for tabs or an integer for spaces eg 4 (no quotes)
+    "json_indent": 4,
+    // Restrict usage based on language settings
+    "restrict_lang": false
+}
