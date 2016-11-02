@@ -34,7 +34,7 @@ class BaseProcessCommand(sublime_plugin.TextCommand):
 
     def change_syntax(self):
         """ Changes syntax to JSON if its in plain text """
-        if "plain text" in self.get_language():
+        if self.settings.get("force_change_syntax", True) or "plain text" in self.get_language():
             self.view.set_syntax_file("Packages/JavaScript/JSON.tmLanguage")
 
     def run(self, edit):
