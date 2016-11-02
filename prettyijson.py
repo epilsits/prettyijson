@@ -6,6 +6,7 @@ from os.path import dirname, basename, splitext
 
 syspath.append(dirname(__file__))
 import ijson
+# import json
 
 class BaseProcessCommand(sublime_plugin.TextCommand):
   
@@ -131,6 +132,7 @@ class PrettyIjsonCommand(BaseProcessCommand):
                         elif event == "number":
                             sOut.write(value + ",")
                         elif event == "string":
+                            # sOut.write(json.dumps(json.loads('"' + value + '"')) + ",")
                             sOut.write('"' + value + '"' + ",")
 
                         sOut.write("\n" if prevEvent == "map_key" else " ")
