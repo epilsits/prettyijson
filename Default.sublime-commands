@@ -1,6 +1,10 @@
 [
     {
-        "caption": "Pretty iJson",
+        "caption": "Pretty iJson: Format",
         "command": "pretty_ijson"
-    }    
+    },
+    {
+        "caption": "Pretty iJson: Minify",
+        "command": "minify_ijson"
+    }
 ]
