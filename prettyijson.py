@@ -160,19 +160,15 @@ class MinifyIjsonCommand(BaseProcessCommand):
                     if event == "start_map":
                         sOut.write("{")
                     elif event == "end_map":
-                        if prevEvent == "start_map":
-                            sOut.write("},")
-                        else:
+                        if prevEvent != "start_map":
                             sOut.seek(sOut.tell() - 1)
-                            sOut.write("},")
+                        sOut.write("},")
                     elif event == "start_array":
                         sOut.write("[")
                     elif event == "end_array":
-                        if prevEvent == "start_array":
-                            sOut.write("],")
-                        else:
+                        if prevEvent != "start_array":
                             sOut.seek(sOut.tell() - 1)
-                            sOut.write("],")
+                        sOut.write("],")
                     elif event == "map_key":
                         sOut.write('"' + value + '"' + ":")
                     else:
