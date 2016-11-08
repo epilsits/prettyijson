@@ -111,9 +111,13 @@ class PrettyIjsonCommand(BaseProcessCommand):
                             indent = indent[:-lenIndent]
                         elif prevEvent == "end_map":
                             sOut.seek(sOut.tell() - 2)
-                            sOut.write("\n")
-                            indent = indent[:-lenIndent]
-                            sOut.write(indent + "],\n")
+                            if self.is_empty_map(sOut):
+                                sOut.write("],\n")
+                                indent = indent[:-lenIndent]
+                            else:
+                                sOut.write("\n")
+                                indent = indent[:-lenIndent]
+                                sOut.write(indent + "],\n")
                         else:
                             sOut.seek(sOut.tell() - 2)
                             sOut.write("],\n")
@@ -121,7 +125,7 @@ class PrettyIjsonCommand(BaseProcessCommand):
                     elif event == "map_key":
                         sOut.write(indent + '"' + value + '"' + ": ")
                     else:
-                        if prevEvent == "end_map":
+                        if prevEvent in ("end_map", "end_array"):
                             sOut.seek(sOut.tell() - 1)
                             sOut.write(" ")
                         
@@ -146,6 +150,14 @@ class PrettyIjsonCommand(BaseProcessCommand):
             message = "Invalid JSON: %s" % (err)
             sublime.status_message(message)
             return
+
+    def is_empty_map(self, sIn):
+        # assume stream head is at character after the close brace }
+        sIn.seek(sIn.tell() - 2)
+        s = sIn.read(1)
+        sIn.read(1) # return head to original position
+        return True if s == "{" else False
+
 
 class MinifyIjsonCommand(BaseProcessCommand):
 
@@ -189,4 +201,22 @@ class MinifyIjsonCommand(BaseProcessCommand):
         except ijson.JSONError as err:
             message = "Invalid JSON: %s" % (err)
             sublime.status_message(message)
+            return
+
+
+class ValidateIjsonCommand(BaseProcessCommand):
+
+    def check_enabled(self, language):
+        return ((language == "json") or (language == "plain text"))
+
+    def process(self, s):
+        try:
+            with StringIO(s) as sIn:
+                parser = ijson.parse(sIn, do_translate=False)
+                for prefix, event, value in parser:
+                    pass
+            sublime.message_dialog("JSON successfully validated  :-)")
+        except ijson.JSONError as err:
+            message = "Invalid JSON: %s" % (err)
+            sublime.error_message(message)
             return

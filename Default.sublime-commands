@@ -6,5 +6,9 @@
     {
         "caption": "Pretty iJson: Minify",
         "command": "minify_ijson"
+    },
+    {
+        "caption": "Pretty iJson: Validate",
+        "command": "validate_ijson"
     }
 ]
